@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon ID Viewer</title>
+</head>
+<body>
+    <h1>Pokémon ID Viewer</h1>
+    <form onsubmit="getPokemonId(); return false;">
+        <label for="pokemonName">Enter Pokémon Name:</label>
+        <input type="text" id="pokemonName" placeholder="e.g., pikachu" required>
+        <button type="submit">Get Pokémon ID</button>
+    </form>
+    <div id="pokemonId"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"></script>
+    <script>
+        var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+        function getPokemonId() {
+            var pokemonName = document.getElementById('pokemonName').value;
+            socket.emit('get_pokemon_id', pokemonName);
+        }
+
+        socket.on('pokemon_id', function(pokemonId) {
+            document.getElementById('pokemonId').innerHTML = 'Pokémon ID: ' + pokemonId;
+        });
+    </script>
+</body>
+</html>

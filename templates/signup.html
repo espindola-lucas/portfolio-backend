@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Registro</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='signup.css') }}">
+</head>
+<body>
+
+    <div class="registro-container">
+        <h2>Registro</h2>
+        <form method="POST" onsubmit="sendDataFormSignUp();">
+            <input id="name" type="text" placeholder="Nombre" name="name" required>
+            <input id="email" type="email" placeholder="Correo electrónico" name="email" required>
+            <input id="password" type="password" placeholder="Contraseña" name="password" required>
+            <button type="submit">Registrarse</button>
+        </form>
+        <p>¿Ya tienes una cuenta? <a href="{{ url_for('login') }}">Inicia sesión</a></p>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"></script>
+    <script>
+        let socket = io.connect('http://' + document.domain + ':' + location.port);
+
+        function sendDataFormSignUp() {
+            let dataForm = {
+                name:document.getElementById('name').value,
+                email:document.getElementById('email').value,
+                password:document.getElementById('password').value
+            };
+            socket.emit('signup', dataForm);
+        }
+    </script>
+</body>
+</html>

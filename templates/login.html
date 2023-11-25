@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='login.css') }}">
+</head>
+<body>
+
+    <div class="login-container">
+        <h2>Login</h2>
+        {% if error %}
+            <p> {{ error }} </p>
+        {% endif %}
+        <form method="POST" onsubmit="sendDataLogin();">
+            <input id="name" type="text" placeholder="Usuario" name="name" required>
+            <input id="password" type="password" placeholder="Contraseña" name="password" required>
+            <button type="submit"><a href="{{ url_for('landingPage') }}">Iniciar Sesión</a></button>
+        </form>
+        <p>¿No tienes una cuenta? <a href="{{ url_for('signup') }}">Regístrate</a></p>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"></script>
+    <script>
+        let socket = io.connect('http://' + document.domain + ':' + location.port);
+
+        function sendDataLogin() {
+            let dataFormLogin = {
+                name:document.getElementById('name').value,
+                password:document.getElementById('password').value
+            };
+            socket.emit('login', dataFormLogin);
+            console.log(dataFormLogin);
+        }
+    </script>
+</body>
+</html>
