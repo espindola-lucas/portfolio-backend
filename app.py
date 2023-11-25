@@ -8,6 +8,7 @@ socketio = SocketIO(app)
 
 session = Session()
 
+# login logic
 @app.route('/', methods=['GET', 'POST'])
 def login():
     print(request.method)
@@ -16,12 +17,15 @@ def login():
             name = request.form.get('name')
             password = request.form.get('password')
             user = session.query(User).filter_by(username=name, password=password).first()
+            
             if user:
                 return render_template('landingPage.html', user=user)
             else:
                 return render_template('login.html', error='Contraseña o usuario incorrecto')
+
     return render_template('login.html')
 
+# register logic
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
