@@ -11,7 +11,6 @@ session = Session()
 # login logic
 @app.route('/', methods=['GET', 'POST'])
 def login():
-    print(request.method)
     if request.method == 'POST':
         if request.form.get('name') and request.form.get('password'):
             name = request.form.get('name')
