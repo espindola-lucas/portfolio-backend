@@ -37,7 +37,9 @@
                 </div>
 
                 <div>
-                    <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400">Iniciar Sesion</button>
+                    <form class="space-y-6" action="{{ url_for('landingPage') }}" method="POST">
+                        <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400">Iniciar Sesion</button>
+                    </form>
                 </div>
             </form>
 
