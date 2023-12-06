@@ -41,7 +41,7 @@ def signup():
             new_user = User(username=name, email=mail, password=password)
             session_db.add(new_user)
             session_db.commit()
-            return render_template('login.html')
+            return redirect(url_for('login'))
 
     return render_template('signup.html')
 
@@ -54,7 +54,7 @@ def landingPage():
 
     github_api_url = 'https://api.github.com/users/espindola-lucas/repos'
     headers = {
-        'Authorization': 'Bearer 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',
+        'Authorization': 'Bearer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',
         'X-GitHub-Api-Version': '2022-11-28'
     }
     response = requests.get(github_api_url, headers=headers)

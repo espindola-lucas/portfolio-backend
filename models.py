@@ -4,8 +4,8 @@ from db import Base, engine
 class User(Base):
     __tablename__ = 'user'
     id = Column(Integer, autoincrement=True, primary_key=True)
-    username = Column(String(70), unique=True)
-    email = Column(String(70), unique=True)
+    username = Column(String(70))
+    email = Column(String(70))
     password = Column(String(70))
 
 
