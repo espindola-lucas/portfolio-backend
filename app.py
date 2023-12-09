@@ -1,10 +1,13 @@
-from flask import Flask, render_template, request, jsonify, redirect, url_for, session, send_file
+from flask import Flask, render_template, request, redirect, url_for, session, send_file
 from werkzeug.utils import safe_join
 from flask_socketio import SocketIO
 from db import Session, engine
 from models import User
-import requests
+import requests, re
 
+def validate_mail(email):
+    pattern = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
+    return bool(re.match(pattern, email))
 
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = 'portfolioBackend'
@@ -36,6 +39,9 @@ def signup():
         name = request.form.get('name')  
         mail = request.form.get('email')  
         password = request.form.get('password')  
+
+        if not validate_mail(mail):
+            return render_template('signup.html', error='Email no válido!')
 
         with engine.connect() as con:
             new_user = User(username=name, email=mail, password=password)
