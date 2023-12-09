@@ -35,21 +35,25 @@ def login():
 # register logic
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
+    error_message = None
+    name = ''
+    email = ''
+    
     if request.method == 'POST':
         name = request.form.get('name')  
-        mail = request.form.get('email')  
+        email = request.form.get('email')  
         password = request.form.get('password')  
 
-        if not validate_mail(mail):
-            return render_template('signup.html', error='Email no válido!')
+        if not validate_mail(email):
+            error_message = 'Email no válido!'
+        else:
+            with engine.connect() as con:
+                new_user = User(username=name, email=email, password=password)
+                session_db.add(new_user)
+                session_db.commit()
+                return redirect(url_for('login'))
 
-        with engine.connect() as con:
-            new_user = User(username=name, email=mail, password=password)
-            session_db.add(new_user)
-            session_db.commit()
-            return redirect(url_for('login'))
-
-    return render_template('signup.html')
+    return render_template('signup.html', error=error_message, name=name, email=email)
 
 # landing page logic
 @app.route('/landingPage')
