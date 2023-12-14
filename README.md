@@ -6,9 +6,8 @@
 - SocketIO
 - sqlalchemy
 - Tailwind
-
+- Docker
 ----------
 
 ## In the terminal run the following
-- npm run tailwind
-- python3 app.py
+- docker-compose build
